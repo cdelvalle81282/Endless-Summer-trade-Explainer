@@ -263,8 +263,8 @@ function render(){
   $('maxl').textContent=fmt(maxL);
   $('upside').textContent=DIR==='bull'?'Uncapped \u2191':'Uncapped \u2193';
   $('be').textContent=bes.length?bes.map(b=>'$'+b.toFixed(1)).join(' / '):'\u2014';
-  $('optBleed').textContent=fmt(legs.optBleed);
-  $('spreadFin').textContent=(legs.spreadFin>=0?'+':'')+fmt(legs.spreadFin).replace('-','\u2212');
+  $('optBleed').textContent='$'+Math.abs(Math.round(legs.optBleed)).toLocaleString();
+  $('spreadFin').textContent='$'+Math.abs(Math.round(legs.spreadFin)).toLocaleString();
 
   const tEl=$('theta'), stateEl=$('state'), needle=$('needle');
   const nt=legs.posTheta;
