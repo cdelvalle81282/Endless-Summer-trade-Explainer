@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Theta-Financed Trade Explorer — Capitol Gains</title>
+<title>Get Paid to Wait · The Capitol Gains Trade · Option Pit</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,400;0,500;0,700;1,400&family=Gelasio:ital,wght@0,400;0,500;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -33,7 +33,7 @@
     color:#fff; overflow:hidden; }
   .sun{ position:absolute; right:13%; bottom:30px; width:96px; height:96px; border-radius:50%;
     background:#FBD988; opacity:0.82; box-shadow:0 0 70px 30px rgba(248,203,114,0.35); }
-  .eyebrow{ font-family:var(--sans); font-size:11px; letter-spacing:.2em; text-transform:uppercase; font-weight:700; color:var(--sun-lt); margin-bottom:12px; }
+  .eyebrow{ font-family:var(--sans); font-size:12px; letter-spacing:.2em; text-transform:uppercase; font-weight:700; color:var(--sun-lt); margin-bottom:12px; }
   .hero h1{ font-family:var(--disp); font-weight:700; font-size:36px; line-height:1.04; color:#fff; max-width:18ch; }
   .hero p{ font-family:var(--sans); font-size:15px; color:#DCE8E5; margin-top:14px; max-width:62ch; line-height:1.5; }
   .kicker{ font-family:var(--mono); font-size:13px; color:var(--sun-lt); margin-top:16px; letter-spacing:.02em; }
@@ -46,7 +46,7 @@
 
   .toggle{display:flex;gap:8px;margin-bottom:18px}
   .toggle button{flex:1;font-family:var(--sans);font-size:13px;font-weight:600;color:var(--muted);background:#F3F6F5;border:1px solid var(--hair);border-radius:10px;padding:10px 8px;cursor:pointer;transition:all .12s;line-height:1.25}
-  .toggle button small{display:block;font-weight:400;font-size:11px;margin-top:2px;color:var(--muted)}
+  .toggle button small{display:block;font-weight:400;font-size:12px;margin-top:2px;color:var(--muted)}
   .toggle button.on{background:var(--teal);border-color:var(--teal);color:#fff}
   .toggle button.on small{color:#D6EEE6}
 
@@ -58,39 +58,39 @@
   input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:20px;height:20px;border-radius:50%;background:#fff;border:2px solid var(--teal);cursor:pointer;transition:transform .12s}
   input[type=range]::-webkit-slider-thumb:hover{transform:scale(1.12)}
   input[type=range]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;background:#fff;border:2px solid var(--teal);cursor:pointer}
-  .ctl-foot{font-size:11px;color:var(--muted);margin-top:6px}
+  .ctl-foot{font-size:12.5px;color:var(--muted);margin-top:6px}
 
   .meter-panel{display:flex;flex-direction:column;justify-content:center}
-  .meter-state{font-size:11px;letter-spacing:.16em;text-transform:uppercase;font-weight:700;margin-bottom:4px;font-family:var(--sans)}
+  .meter-state{font-size:13px;letter-spacing:.16em;text-transform:uppercase;font-weight:700;margin-bottom:4px;font-family:var(--sans)}
   .meter-theta{font-family:var(--mono);font-size:38px;font-weight:600;line-height:1}
   .meter-theta small{font-size:15px;font-weight:500;color:var(--muted)}
   .gauge{position:relative;height:46px;margin-top:18px}
   .gauge-track{position:absolute;top:20px;left:0;right:0;height:6px;border-radius:6px;
     background:linear-gradient(90deg,var(--bad) 0%,var(--hair-strong) 50%,var(--good) 100%);opacity:.55}
   .gauge-zero{position:absolute;top:12px;left:50%;width:2px;height:22px;background:var(--ink);transform:translateX(-50%)}
-  .gauge-zero::after{content:'0';position:absolute;top:24px;left:50%;transform:translateX(-50%);font-family:var(--mono);font-size:10px;color:var(--muted)}
+  .gauge-zero::after{content:'0';position:absolute;top:24px;left:50%;transform:translateX(-50%);font-family:var(--mono);font-size:11px;color:var(--muted)}
   .needle{position:absolute;top:8px;width:4px;height:30px;border-radius:3px;background:var(--ink);transition:left .18s ease, background .18s ease}
-  .gauge-ends{display:flex;justify-content:space-between;margin-top:30px;font-size:10px;color:var(--muted);font-family:var(--mono)}
-  .compare{margin-top:18px;padding-top:14px;border-top:1px solid var(--hair);font-size:12px;color:var(--muted);line-height:1.7}
+  .gauge-ends{display:flex;justify-content:space-between;margin-top:30px;font-size:12px;color:var(--muted);font-family:var(--mono)}
+  .compare{margin-top:18px;padding-top:14px;border-top:1px solid var(--hair);font-size:13.5px;color:var(--muted);line-height:1.7}
   .compare b{color:var(--ink);font-family:var(--mono);font-weight:600}
 
   .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--hair);border:1px solid var(--hair);border-radius:14px;overflow:hidden;margin-bottom:14px}
   @media (max-width:640px){.stats{grid-template-columns:1fr 1fr}}
   .stat{background:var(--card);padding:14px 16px}
-  .stat-label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;font-weight:600}
+  .stat-label{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;font-weight:600}
   .stat-val{font-family:var(--mono);font-size:17px;font-weight:600}
   .pos{color:var(--good)} .neg{color:var(--bad)}
 
   .chart-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px}
   .chart-title{font-family:var(--serif);font-size:15px;font-weight:600;color:var(--ink)}
-  .chart-leg{font-size:11px;color:var(--muted);font-family:var(--mono)}
+  .chart-leg{font-size:12px;color:var(--muted);font-family:var(--mono)}
   .chart-box{position:relative;width:100%;height:300px}
 
-  .foot{margin-top:18px;font-size:12px;color:var(--muted);line-height:1.7}
+  .foot{margin-top:18px;font-size:13.5px;color:var(--muted);line-height:1.7}
   .foot .note{margin-bottom:10px}
   .foot b{color:var(--ink);font-weight:600}
-  .assume{font-size:11px;border-top:1px solid var(--hair);padding-top:12px}
-  .brand{margin-top:18px;display:flex;align-items:center;gap:10px;font-size:11px;color:var(--muted);letter-spacing:.04em}
+  .assume{font-size:12.5px;border-top:1px solid var(--hair);padding-top:12px}
+  .brand{margin-top:18px;display:flex;align-items:center;gap:10px;font-size:12px;color:var(--muted);letter-spacing:.04em}
   .brand b{color:var(--teal-dk)}
 </style>
 </head>
@@ -99,8 +99,8 @@
   <header class="hero">
     <div class="sun"></div>
     <div class="eyebrow">Option Pit · Capitol Gains</div>
-    <h1>The theta-financed trade</h1>
-    <p>Sell a credit spread to finance a long call or put. Move the spread toward the money and watch the premium you collect pay off the option's time decay — so you get paid to wait for your move.</p>
+    <h1>Get paid to wait for the move</h1>
+    <p>Most options cost you a little every day you hold them. This one flips it. A credit spread you sell covers that cost, so you wait for next to nothing, your downside stays capped, and your upside stays wide open. Slide the controls and watch it work.</p>
     <div class="kicker">get paid to wait · catch the wave</div>
     <svg class="wave" viewBox="0 0 1440 80" preserveAspectRatio="none" aria-hidden="true">
       <path d="M0,34 C 240,8 460,60 720,40 C 980,20 1200,62 1440,36" fill="none" stroke="#7FD3BE" stroke-width="3" opacity="0.45"/>
@@ -116,24 +116,24 @@
           <button id="dirBear" type="button">Lean bearish<small>sell call spread · buy put</small></button>
         </div>
         <div class="ctl">
-          <div class="ctl-head"><span class="ctl-label" id="shortKLabel">Credit spread — short put</span><span class="ctl-val num" id="shortKVal">$96</span></div>
+          <div class="ctl-head"><span class="ctl-label" id="shortKLabel">The spread you sell (short put)</span><span class="ctl-val num" id="shortKVal">$96</span></div>
           <input type="range" id="shortK" min="88" max="99" step="1" value="97">
-          <div class="ctl-foot">Move toward $100 to collect more credit — more financing</div>
+          <div class="ctl-foot">Slide toward $100 to collect more credit, so more of your wait gets covered</div>
         </div>
         <div class="ctl">
           <div class="ctl-head"><span class="ctl-label">Spread width</span><span class="ctl-val num" id="widthVal">$5</span></div>
           <input type="range" id="width" min="2" max="8" step="1" value="6">
-          <div class="ctl-foot">The width sets your defined max risk</div>
+          <div class="ctl-foot">The width sets the most you can lose. That number is fixed up front.</div>
         </div>
         <div class="ctl">
-          <div class="ctl-head"><span class="ctl-label" id="optKLabel">Long call — your shot</span><span class="ctl-val num" id="optKVal">$105</span></div>
+          <div class="ctl-head"><span class="ctl-label" id="optKLabel">Your shot at the move (call)</span><span class="ctl-val num" id="optKVal">$105</span></div>
           <input type="range" id="optK" min="100" max="115" step="1" value="111">
-          <div class="ctl-foot" id="optKFoot">Your uncapped shot if the move breaks your way</div>
+          <div class="ctl-foot" id="optKFoot">This is your uncapped upside when it runs your way</div>
         </div>
         <div class="ctl">
           <div class="ctl-head"><span class="ctl-label">Days to expiration</span><span class="ctl-val num" id="dteVal">25</span></div>
           <input type="range" id="dte" min="5" max="45" step="1" value="25">
-          <div class="ctl-foot">Same expiration on every leg · Andrew keeps it 30 days or less</div>
+          <div class="ctl-foot">Every leg shares one expiration · Andrew keeps it 30 days or less</div>
         </div>
         <div class="ctl">
           <div class="ctl-head"><span class="ctl-label">Implied volatility</span><span class="ctl-val num" id="ivVal">30%</span></div>
@@ -141,40 +141,41 @@
         </div>
       </section>
 
-      <section class="panel meter-panel" aria-label="Net theta">
-        <div class="meter-state" id="state">Net theta</div>
+      <section class="panel meter-panel" aria-label="What the wait costs you">
+        <div class="meter-state" id="state">What the wait costs you</div>
         <div class="meter-theta num" id="theta">$0<small>/day</small></div>
-        <div class="gauge" role="img" aria-label="Theta gauge centered on zero">
+        <div class="gauge" role="img" aria-label="Cost-to-wait gauge centered on zero">
           <div class="gauge-track"></div>
           <div class="gauge-zero"></div>
           <div class="needle" id="needle" style="left:50%"></div>
-          <div class="gauge-ends"><span>−$15 bleed</span><span>+$15 earn</span></div>
+          <div class="gauge-ends"><span>−$15 you pay</span><span>+$15 you're paid</span></div>
         </div>
         <div class="compare">
-          The long option alone bleeds <b id="optBleed">$0</b>/day.<br>
-          The credit spread hands back <b id="spreadFin">$0</b>/day.
+          Your option alone costs you <b id="optBleed">$0</b> a day to hold.<br>
+          The spread you sell pays back <b id="spreadFin">$0</b> a day.
         </div>
       </section>
     </div>
 
     <div class="stats">
-      <div class="stat"><div class="stat-label">Net cost</div><div class="stat-val num" id="debit">$0</div></div>
-      <div class="stat"><div class="stat-label">Max loss</div><div class="stat-val num neg" id="maxl">$0</div></div>
-      <div class="stat"><div class="stat-label">Upside</div><div class="stat-val num pos" id="upside">Uncapped</div></div>
-      <div class="stat"><div class="stat-label">Breakeven</div><div class="stat-val num" id="be">—</div></div>
+      <div class="stat"><div class="stat-label">Cost to enter</div><div class="stat-val num" id="debit">$0</div></div>
+      <div class="stat"><div class="stat-label">Most you can lose</div><div class="stat-val num neg" id="maxl">$0</div></div>
+      <div class="stat"><div class="stat-label">Your upside</div><div class="stat-val num pos" id="upside">Uncapped</div></div>
+      <div class="stat"><div class="stat-label">You profit past</div><div class="stat-val num" id="be">·</div></div>
     </div>
 
     <section class="panel">
       <div class="chart-head">
-        <span class="chart-title">Payoff at expiration</span>
+        <span class="chart-title">What you make at expiration</span>
         <span class="chart-leg">per 1 contract</span>
       </div>
       <div class="chart-box"><canvas id="payoff" role="img" aria-label="Payoff curve: capped loss if the stock runs against you, a small flat zone where you keep the credit, and an uncapped gain if it breaks your way."></canvas></div>
     </section>
 
     <div class="foot">
-      <p class="note"><b>How to read it.</b> Move the credit spread toward $100 and the needle slides to center — the premium you collect on the spread offsets the time decay on the option you bought, so you're barely paying to wait. The payoff: a <b>defined</b> loss if the stock runs against you, a flat zone where you simply keep the spread's credit if it chops, and an <b>uncapped</b> gain if the move finally breaks your way. Lean bullish or bearish with the toggle.</p>
-      <p class="assume">Theoretical values at entry from Black-Scholes (European, no dividends, 4% rate, single IV across strikes — real skew will shift the credit). Spot fixed at $100; all legs share one expiration. A teaching model, not a trade recommendation — real fills, skew, and early assignment will move these numbers.</p>
+      <p class="note"><b>What you're looking at.</b> Slide the credit spread toward $100 and the needle slides to center. The premium you collect now covers the daily cost of the option you bought, so you're holding your shot at the move for almost nothing. Read the payoff left to right: your loss is <b>capped and known</b> if the stock runs against you, you simply <b>keep the credit</b> if it chops sideways, and your gain is <b>uncapped</b> when the move finally breaks your way. Flip between bullish and bearish with the toggle up top.</p>
+      <p class="assume"><b>Heads up:</b> placing this trade takes spread-level options approval at your broker (often called Level 3). Most brokers grant it with a quick application.</p>
+      <p class="assume">Values are theoretical, from Black-Scholes (European, no dividends, 4% rate, one IV across strikes, so real skew will shift the credit). Spot is fixed at $100 and every leg shares one expiration. This is a teaching model, not a trade recommendation. Real fills, skew, and early assignment will move these numbers.</p>
       <div class="brand">
         <svg width="34" height="14" viewBox="0 0 34 14" aria-hidden="true"><path d="M0,7 C 6,2 11,12 17,7 C 23,2 28,12 34,7" fill="none" stroke="#0E7C66" stroke-width="2" opacity="0.7"/></svg>
         <span><b>Option Pit · Capitol Gains</b> · built for traders who'd rather see it than be told</span>
@@ -204,18 +205,18 @@ function configureDirection(){
   const sk=$('shortK'), ok=$('optK');
   if(DIR==='bull'){
     $('dirBull').classList.add('on'); $('dirBear').classList.remove('on');
-    $('shortKLabel').textContent='Credit spread — short put';
+    $('shortKLabel').textContent='The spread you sell (short put)';
     sk.min=88; sk.max=99; if(+sk.value<88||+sk.value>99) sk.value=96;
-    $('optKLabel').textContent='Long call — your shot';
+    $('optKLabel').textContent='Your shot at the move (call)';
     ok.min=100; ok.max=115; if(+ok.value<100||+ok.value>115) ok.value=105;
-    $('optKFoot').textContent='Your uncapped shot if the move breaks up';
+    $('optKFoot').textContent='Your uncapped upside when it runs up';
   } else {
     $('dirBear').classList.add('on'); $('dirBull').classList.remove('on');
-    $('shortKLabel').textContent='Credit spread — short call';
+    $('shortKLabel').textContent='The spread you sell (short call)';
     sk.min=101; sk.max=112; if(+sk.value<101||+sk.value>112) sk.value=104;
-    $('optKLabel').textContent='Long put — your shot';
+    $('optKLabel').textContent='Your shot at the move (put)';
     ok.min=85; ok.max=100; if(+ok.value<85||+ok.value>100) ok.value=95;
-    $('optKFoot').textContent='Your uncapped shot if the move breaks down';
+    $('optKFoot').textContent='Your uncapped upside when it runs down';
   }
 }
 
@@ -269,9 +270,9 @@ function render(){
   const nt=legs.posTheta;
   tEl.innerHTML=(nt<0?'-$':'+$')+Math.abs(nt).toFixed(0)+'<small>/day</small>';
   const near=Math.abs(nt)<1.0; let col;
-  if(near){col=css('--good');stateEl.textContent='Theta financed';stateEl.style.color=col;}
-  else if(nt<0){col=css('--bad');stateEl.textContent='Still bleeding';stateEl.style.color=col;}
-  else{col=css('--good');stateEl.textContent='Now earning theta';stateEl.style.color=col;}
+  if(near){col=css('--good');stateEl.textContent='Your wait is covered';stateEl.style.color=col;}
+  else if(nt<0){col=css('--bad');stateEl.textContent="You're paying to wait";stateEl.style.color=col;}
+  else{col=css('--good');stateEl.textContent="You're getting paid to wait";stateEl.style.color=col;}
   tEl.style.color=col;
   const clamped=Math.max(-15,Math.min(15,nt));
   needle.style.left=((clamped+15)/30*100)+'%';
