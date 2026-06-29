@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zero-Theta Trade Explorer — Capitol Gains</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,400;0,500;0,700;1,400&family=Gelasio:ital,wght@0,400;0,500;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+  :root{
+    --ocean:#06212A; --ocean2:#0A3138; --sea:#16484A;
+    --foam:#EEF3F2; --card:#FFFFFF; --ink:#14201F; --muted:#5E6B6B;
+    --hair:#D6DEDD; --hair-strong:#C2CCCB;
+    --teal:#0E7C66; --teal-dk:#0A5C4C; --teal-lt:#7FD3BE; --teal-tint:#E3F1EC;
+    --coral:#DD5328; --coral-tint:#FBE7DC;
+    --sun:#D9882B; --sun-dk:#9E5F12; --sun-lt:#F3C77E; --sun-tint:#FAEFD9;
+    --good:#0E7C66; --bad:#DD5328;
+    --radius:10px;
+    --disp:"Bookman Old Style","URW Bookman","Bitter",Georgia,serif;
+    --serif:"Cambria","Gelasio",Georgia,serif;
+    --sans:"Calibri","Carlito",system-ui,-apple-system,"Segoe UI",sans-serif;
+    --mono:"IBM Plex Mono","Courier New",ui-monospace,monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{ background:#E7EEEC; color:var(--ink); font-family:var(--sans); line-height:1.5; -webkit-font-smoothing:antialiased; padding:22px 14px; }
+  .card{ max-width:880px; margin:0 auto; border-radius:18px; overflow:hidden; box-shadow:0 18px 48px rgba(8,40,44,0.18); background:var(--foam); }
+  .num{font-family:var(--mono);font-variant-numeric:tabular-nums;font-feature-settings:"tnum"}
+
+  /* ---- hero ---- */
+  .hero{ position:relative; padding:30px 34px 56px;
+    background:
+      radial-gradient(130% 150% at 80% 135%, rgba(248,203,114,0.92) 0%, rgba(240,162,76,0.5) 20%, rgba(224,122,46,0.14) 46%, transparent 68%),
+      linear-gradient(158deg, #06212A 0%, #0A3138 46%, #16484A 80%, #2A5246 100%);
+    color:#fff; overflow:hidden; }
+  .sun{ position:absolute; right:13%; bottom:30px; width:96px; height:96px; border-radius:50%;
+    background:#FBD988; opacity:0.82; box-shadow:0 0 70px 30px rgba(248,203,114,0.35); }
+  .eyebrow{ font-family:var(--sans); font-size:11px; letter-spacing:.2em; text-transform:uppercase; font-weight:700; color:var(--sun-lt); margin-bottom:12px; }
+  .hero h1{ font-family:var(--disp); font-weight:700; font-size:38px; line-height:1.02; letter-spacing:.01em; color:#fff; max-width:15ch; }
+  .hero p{ font-family:var(--sans); font-size:15px; color:#DCE8E5; margin-top:14px; max-width:60ch; line-height:1.5; }
+  .kicker{ font-family:var(--mono); font-size:13px; color:var(--sun-lt); margin-top:16px; letter-spacing:.02em; }
+  .wave{ position:absolute; left:0; bottom:-1px; width:100%; height:54px; display:block; }
+
+  /* ---- body ---- */
+  .body{ background:var(--foam); padding:24px 26px 20px; }
+  .panel{ background:var(--card); border:1px solid var(--hair); border-radius:14px; padding:20px; }
+  .grid{ display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:14px; }
+  @media (max-width:640px){ .grid{grid-template-columns:1fr} .hero h1{font-size:30px} }
+
+  .ctl{margin-bottom:18px} .ctl:last-child{margin-bottom:0}
+  .ctl-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px}
+  .ctl-label{font-size:13px;font-weight:500;color:var(--ink)}
+  .ctl-val{font-family:var(--mono);font-size:15px;font-weight:600;color:var(--ink)}
+  input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:4px;border-radius:4px;background:var(--hair-strong);outline:none;cursor:pointer}
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:20px;height:20px;border-radius:50%;background:#fff;border:2px solid var(--teal);cursor:pointer;transition:transform .12s}
+  input[type=range]::-webkit-slider-thumb:hover{transform:scale(1.12)}
+  input[type=range]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;background:#fff;border:2px solid var(--teal);cursor:pointer}
+  input[type=range]:focus-visible::-webkit-slider-thumb{box-shadow:0 0 0 4px var(--teal-tint)}
+  .ctl-foot{font-size:11px;color:var(--muted);margin-top:6px}
+
+  .meter-panel{display:flex;flex-direction:column;justify-content:center}
+  .meter-state{font-size:11px;letter-spacing:.16em;text-transform:uppercase;font-weight:700;margin-bottom:4px;font-family:var(--sans)}
+  .meter-theta{font-family:var(--mono);font-size:38px;font-weight:600;line-height:1}
+  .meter-theta small{font-size:15px;font-weight:500;color:var(--muted)}
+  .gauge{position:relative;height:46px;margin-top:18px}
+  .gauge-track{position:absolute;top:20px;left:0;right:0;height:6px;border-radius:6px;
+    background:linear-gradient(90deg,var(--bad) 0%,var(--hair-strong) 50%,var(--good) 100%);opacity:.55}
+  .gauge-zero{position:absolute;top:12px;left:50%;width:2px;height:22px;background:var(--ink);transform:translateX(-50%)}
+  .gauge-zero::after{content:'0';position:absolute;top:24px;left:50%;transform:translateX(-50%);font-family:var(--mono);font-size:10px;color:var(--muted)}
+  .needle{position:absolute;top:8px;width:4px;height:30px;border-radius:3px;background:var(--ink);transition:left .18s ease, background .18s ease}
+  .gauge-ends{display:flex;justify-content:space-between;margin-top:30px;font-size:10px;color:var(--muted);font-family:var(--mono)}
+  .compare{margin-top:18px;padding-top:14px;border-top:1px solid var(--hair);font-size:12px;color:var(--muted);line-height:1.7}
+  .compare b{color:var(--ink);font-family:var(--mono);font-weight:600}
+
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--hair);border:1px solid var(--hair);border-radius:14px;overflow:hidden;margin-bottom:14px}
+  @media (max-width:640px){.stats{grid-template-columns:1fr 1fr}}
+  .stat{background:var(--card);padding:14px 16px}
+  .stat-label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;font-weight:600}
+  .stat-val{font-family:var(--mono);font-size:18px;font-weight:600}
+  .pos{color:var(--good)} .neg{color:var(--bad)}
+
+  .chart-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px}
+  .chart-title{font-family:var(--serif);font-size:15px;font-weight:600;color:var(--ink)}
+  .chart-leg{font-size:11px;color:var(--muted);font-family:var(--mono)}
+  .chart-box{position:relative;width:100%;height:300px}
+
+  .foot{margin-top:18px;font-size:12px;color:var(--muted);line-height:1.7}
+  .foot .note{margin-bottom:10px}
+  .foot b{color:var(--ink);font-weight:600}
+  .assume{font-size:11px;border-top:1px solid var(--hair);padding-top:12px}
+  .brand{margin-top:18px;display:flex;align-items:center;gap:10px;font-size:11px;color:var(--muted);letter-spacing:.04em}
+  .brand b{color:var(--teal-dk)}
+  .brand svg{flex:0 0 auto}
+</style>
+</head>
+<body>
+<div class="card">
+  <header class="hero">
+    <div class="sun"></div>
+    <div class="eyebrow">Option Pit · Capitol Gains</div>
+    <h1>Zero-Theta Trade Explorer</h1>
+    <p>A long iron butterfly on a $100 stock. Drag the wings to finance the body's time decay to zero — then see the payoff you're left holding.</p>
+    <div class="kicker">0 theta · catch the wave</div>
+    <svg class="wave" viewBox="0 0 1440 80" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M0,34 C 240,8 460,60 720,40 C 980,20 1200,62 1440,36" fill="none" stroke="#7FD3BE" stroke-width="3" opacity="0.45"/>
+      <path d="M0,46 C 240,18 480,74 720,48 C 960,22 1200,74 1440,44 L1440,80 L0,80 Z" fill="#EEF3F2"/>
+    </svg>
+  </header>
+
+  <div class="body">
+    <div class="grid">
+      <section class="panel" aria-label="Controls">
+        <div class="ctl">
+          <div class="ctl-head"><span class="ctl-label">Lower wing — short put</span><span class="ctl-val num" id="kpVal">$90</span></div>
+          <input type="range" id="kp" min="80" max="99" step="1" value="90" aria-label="Lower wing short put strike">
+          <div class="ctl-foot">Move toward $100 to collect more decay</div>
+        </div>
+        <div class="ctl">
+          <div class="ctl-head"><span class="ctl-label">Upper wing — short call</span><span class="ctl-val num" id="kcVal">$110</span></div>
+          <input type="range" id="kc" min="101" max="120" step="1" value="110" aria-label="Upper wing short call strike">
+          <div class="ctl-foot">Move toward $100 to collect more decay</div>
+        </div>
+        <div class="ctl">
+          <div class="ctl-head"><span class="ctl-label">Days to expiration</span><span class="ctl-val num" id="dteVal">30</span></div>
+          <input type="range" id="dte" min="1" max="90" step="1" value="30" aria-label="Days to expiration">
+        </div>
+        <div class="ctl">
+          <div class="ctl-head"><span class="ctl-label">Implied volatility</span><span class="ctl-val num" id="ivVal">30%</span></div>
+          <input type="range" id="iv" min="10" max="80" step="1" value="30" aria-label="Implied volatility percent">
+        </div>
+      </section>
+
+      <section class="panel meter-panel" aria-label="Net theta">
+        <div class="meter-state" id="state">Net theta</div>
+        <div class="meter-theta num" id="theta">$0<small>/day</small></div>
+        <div class="gauge" role="img" aria-label="Theta gauge centered on zero">
+          <div class="gauge-track"></div>
+          <div class="gauge-zero"></div>
+          <div class="needle" id="needle" style="left:50%"></div>
+          <div class="gauge-ends"><span>−$15 bleed</span><span>+$15 earn</span></div>
+        </div>
+        <div class="compare">
+          Body straddle alone decays <b id="straddleT">$0</b>/day.<br>
+          The two wings hand back <b id="wingT">$0</b>/day.
+        </div>
+      </section>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><div class="stat-label">Net debit</div><div class="stat-val num" id="debit">$0</div></div>
+      <div class="stat"><div class="stat-label">Max profit</div><div class="stat-val num pos" id="maxp">$0</div></div>
+      <div class="stat"><div class="stat-label">Max loss</div><div class="stat-val num neg" id="maxl">$0</div></div>
+      <div class="stat"><div class="stat-label">Breakevens</div><div class="stat-val num" id="be">—</div></div>
+    </div>
+
+    <section class="panel">
+      <div class="chart-head">
+        <span class="chart-title">Payoff at expiration</span>
+        <span class="chart-leg">per 1 contract</span>
+      </div>
+      <div class="chart-box"><canvas id="payoff" role="img" aria-label="Payoff curve for the iron butterfly across stock prices, a valley: a loss if the stock pins near 100 and capped profit on a move past either wing.">Profits about 4 dollars on a big move either direction, loses 6 dollars if the stock stays at 100.</canvas></div>
+    </section>
+
+    <div class="foot">
+      <p class="note"><b>How to read it.</b> Narrow the wings toward $100 and the needle slides to the center — net theta hits zero because the decay you collect on the sold wings matches the decay you pay on the body. What's left is the payoff valley: you lose the debit if the stock pins at $100, and you bank capped profit if it breaks past either wing. Killing theta doesn't make a free trade — it trades the daily clock for needing a real move.</p>
+      <p class="assume">Theoretical values at entry from Black-Scholes (European, no dividends, 4% rate assumed). Spot fixed at $100; the long straddle body sits at the $100 strike. A teaching model, not a trade recommendation — real fills, skew, and early assignment will move these numbers.</p>
+      <div class="brand">
+        <svg width="34" height="14" viewBox="0 0 34 14" aria-hidden="true"><path d="M0,7 C 6,2 11,12 17,7 C 23,2 28,12 34,7" fill="none" stroke="#0E7C66" stroke-width="2" opacity="0.7"/></svg>
+        <span><b>Option Pit · Capitol Gains</b> · built for traders who'd rather see it than be told</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const R = 0.04, SPOT = 100, BODY = 100, MULT = 100;
+function normCDF(x){ const t=1/(1+0.2316419*Math.abs(x)); const d=0.3989422804014327*Math.exp(-x*x/2);
+  let p=d*t*(0.3193815+t*(-0.3565638+t*(1.781478+t*(-1.821256+t*1.330274)))); return x>0?1-p:p; }
+function normPDF(x){ return 0.3989422804014327*Math.exp(-x*x/2); }
+function bs(S,K,T,sig,type){
+  if(T<=0){ const intr=type==='call'?Math.max(S-K,0):Math.max(K-S,0); return {price:intr, theta:0}; }
+  const sq=Math.sqrt(T); const d1=(Math.log(S/K)+(R+sig*sig/2)*T)/(sig*sq); const d2=d1-sig*sq;
+  let price,thetaYr;
+  if(type==='call'){ price=S*normCDF(d1)-K*Math.exp(-R*T)*normCDF(d2); thetaYr=-(S*normPDF(d1)*sig)/(2*sq)-R*K*Math.exp(-R*T)*normCDF(d2); }
+  else { price=K*Math.exp(-R*T)*normCDF(-d2)-S*normCDF(-d1); thetaYr=-(S*normPDF(d1)*sig)/(2*sq)+R*K*Math.exp(-R*T)*normCDF(-d2); }
+  return {price, theta:thetaYr/365};
+}
+function fmt(n){ return (n<0?'-$':'$')+Math.abs(Math.round(n)).toLocaleString(); }
+function css(v){ return getComputedStyle(document.documentElement).getPropertyValue(v).trim(); }
+
+let chart;
+function render(){
+  const Kp=+document.getElementById('kp').value, Kc=+document.getElementById('kc').value;
+  const T=+document.getElementById('dte').value/365, sig=+document.getElementById('iv').value/100;
+  document.getElementById('kpVal').textContent='$'+Kp;
+  document.getElementById('kcVal').textContent='$'+Kc;
+  document.getElementById('dteVal').textContent=Math.round(T*365);
+  document.getElementById('ivVal').textContent=Math.round(sig*100)+'%';
+
+  const c100=bs(SPOT,BODY,T,sig,'call'), p100=bs(SPOT,BODY,T,sig,'put');
+  const pK=bs(SPOT,Kp,T,sig,'put'), cK=bs(SPOT,Kc,T,sig,'call');
+  const debit=(c100.price+p100.price-pK.price-cK.price)*MULT;
+  const straddleT=(c100.theta+p100.theta)*MULT;
+  const wingGiveBack=-(pK.theta+cK.theta)*MULT;
+  const netTheta=(c100.theta+p100.theta-pK.theta-cK.theta)*MULT;
+
+  const xs=[], ys=[];
+  for(let S=70;S<=130.0001;S+=0.5){
+    const pl=(Math.max(S-BODY,0)+Math.max(BODY-S,0)-Math.max(Kp-S,0)-Math.max(S-Kc,0))*MULT - debit;
+    xs.push(S); ys.push(pl);
+  }
+  const maxP=Math.max(...ys), maxL=Math.min(...ys);
+  const bes=[];
+  for(let i=1;i<ys.length;i++){ if((ys[i-1]<0)!==(ys[i]<0)){ const t=ys[i-1]/(ys[i-1]-ys[i]); bes.push(xs[i-1]+t*0.5); } }
+
+  document.getElementById('debit').textContent=fmt(debit);
+  document.getElementById('maxp').textContent=fmt(maxP);
+  document.getElementById('maxl').textContent=fmt(maxL);
+  document.getElementById('be').textContent=bes.length?bes.map(b=>'$'+b.toFixed(1)).join(' / '):'none';
+  document.getElementById('straddleT').textContent=fmt(straddleT);
+  document.getElementById('wingT').textContent=fmt(wingGiveBack);
+
+  const tEl=document.getElementById('theta'), stateEl=document.getElementById('state'), needle=document.getElementById('needle');
+  tEl.innerHTML=(netTheta<0?'-$':'+$')+Math.abs(netTheta).toFixed(0)+'<small>/day</small>';
+  const near=Math.abs(netTheta)<1.0; let col;
+  if(near){ col=css('--good'); stateEl.textContent='Theta neutralized'; stateEl.style.color=col; }
+  else if(netTheta<0){ col=css('--bad'); stateEl.textContent='Still bleeding'; stateEl.style.color=col; }
+  else { col=css('--good'); stateEl.textContent='Now earning theta'; stateEl.style.color=col; }
+  tEl.style.color=col;
+  const clamped=Math.max(-15,Math.min(15,netTheta));
+  needle.style.left=((clamped+15)/30*100)+'%';
+  needle.style.background=col;
+
+  const ink=css('--ink'), muted=css('--muted'), hair=css('--hair'), good=css('--good'), bad=css('--bad');
+  const data=xs.map((x,i)=>({x,y:ys[i]}));
+  const strikeLines={ id:'strikeLines', afterDraw(c){
+    const {ctx, chartArea:{top,bottom}, scales:{x}}=c;
+    [[Kp],[BODY],[Kc]].forEach(([k])=>{ const px=x.getPixelForValue(k); ctx.save();
+      ctx.beginPath(); ctx.setLineDash([3,3]); ctx.lineWidth=1; ctx.strokeStyle=k===BODY?muted:hair;
+      ctx.moveTo(px,top); ctx.lineTo(px,bottom); ctx.stroke(); ctx.restore(); });
+  }};
+  if(chart) chart.destroy();
+  chart=new Chart(document.getElementById('payoff'),{
+    type:'line',
+    data:{ datasets:[{ data, parsing:false, borderWidth:2.5, pointRadius:0, tension:0,
+      fill:{target:'origin', above:'rgba(14,124,102,0.08)', below:'rgba(221,83,40,0.08)'},
+      segment:{ borderColor: ctx => ctx.p1.parsed.y>=0 ? good : bad } }]},
+    options:{ responsive:true, maintainAspectRatio:false, animation:false,
+      plugins:{ legend:{display:false}, tooltip:{ callbacks:{
+        title:i=>'Stock at $'+i[0].parsed.x.toFixed(1),
+        label:i=>'P/L: '+(i.parsed.y>=0?'+$':'-$')+Math.abs(i.parsed.y).toFixed(0) }}},
+      scales:{
+        x:{type:'linear', min:70, max:130, title:{display:true,text:'stock price at expiration',color:muted,font:{size:11}},
+          grid:{display:false}, ticks:{color:muted,callback:v=>'$'+v,font:{family:'IBM Plex Mono'},stepSize:10}},
+        y:{title:{display:true,text:'profit / loss',color:muted,font:{size:11}},
+          grid:{color:hair}, ticks:{color:muted,callback:v=>(v<0?'-$':'$')+Math.abs(v),font:{family:'IBM Plex Mono'}}}
+      }
+    },
+    plugins:[strikeLines]
+  });
+}
+['kp','kc','dte','iv'].forEach(id=>document.getElementById(id).addEventListener('input',render));
+render();
+</script>
+</body>
+</html>
